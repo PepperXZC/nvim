@@ -5,6 +5,7 @@
 "|_|  |_| |_|   |_| \_|  \_/  |___|_|  |_|_| \_\\____|
 
 " Author: @theniceboy
+" Updated: @PepperXZC
 
 " Checkout-list
 " vim-esearch
@@ -13,25 +14,25 @@
 
 
 " ==================== Auto load for first time uses ====================
-if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
-	silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
+if empty(glob($HOME.'/Appdata/Local/nvim/autoload/plug.vim'))
+	silent !curl -fLo $HOME/Appdata/Local/nvim/autoload/plug.vim --create-dirs
 				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 let g:nvim_plugins_installation_completed=1
-if empty(glob($HOME.'/.config/nvim/plugged/wildfire.vim/autoload/wildfire.vim'))
+if empty(glob($HOME.'/Appdata/Local/nvim/plugged/wildfire.vim/autoload/wildfire.vim'))
 	let g:nvim_plugins_installation_completed=0
-	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	autocmd VimEnter * silent! PlugInstall --sync | source $MYVIMRC
 endif
 
 " Create a _machine_specific.vim file to adjust machine specific stuff, like python interpreter location 
 let has_machine_specific_file = 1
-if empty(glob('~/.config/nvim/_machine_specific.vim'))
+if empty(glob('~/Appdata/Local/nvim/_machine_specific.vim'))
 	let has_machine_specific_file = 0
-	silent! exec "!cp ~/.config/nvim/default_configs/_machine_specific_default.vim ~/.config/nvim/_machine_specific.vim"
+	silent! exec "!cp ~/Appdata/Local/nvim/default_configs/_machine_specific_default.vim ~/Appdata/Local/nvim/_machine_specific.vim"
 endif
-source $HOME/.config/nvim/_machine_specific.vim
+source $HOME/Appdata/Local/nvim/_machine_specific.vim
 
 " ==================== Editor behavior ====================
 "set clipboard=unnamedplus
@@ -70,14 +71,14 @@ set inccommand=split
 set completeopt=longest,noinsert,menuone,noselect,preview
 set lazyredraw
 set visualbell
-silent !mkdir -p $HOME/.config/nvim/tmp/backup
-silent !mkdir -p $HOME/.config/nvim/tmp/undo
-"silent !mkdir -p $HOME/.config/nvim/tmp/sessions
-set backupdir=$HOME/.config/nvim/tmp/backup,.
-set directory=$HOME/.config/nvim/tmp/backup,.
+silent !mkdir -p $HOME/Appdata/Local/nvim/tmp/backup
+silent !mkdir -p $HOME/Appdata/Local/nvim/tmp/undo
+"silent !mkdir -p $HOME/Appdata/Local/nvim/tmp/sessions
+set backupdir=$HOME/Appdata/Local/nvim/tmp/backup,.
+set directory=$HOME/Appdata/Local/nvim/tmp/backup,.
 if has('persistent_undo')
 	set undofile
-	set undodir=$HOME/.config/nvim/tmp/undo,.
+	set undodir=$HOME/Appdata/Local/nvim/tmp/undo,.
 endif
 set colorcolumn=100
 set updatetime=100
@@ -99,7 +100,7 @@ noremap ; :
 nnoremap Q :q<CR>
 nnoremap S :w<CR>
 " Open the vimrc file anytime
-nnoremap <LEADER>rc :e $HOME/.config/nvim/init.vim<CR>
+nnoremap <LEADER>rc :e $HOME/Appdata/Local/nvim/init.vim<CR>
 nnoremap <LEADER>rv :e .nvimrc<CR>
 augroup NVIMRC
     autocmd!
@@ -158,7 +159,7 @@ noremap h e
 noremap <C-U> 5<C-y>
 noremap <C-E> 5<C-e>
 " Custom cursor movement
-source $HOME/.config/nvim/cursor.vim
+source $HOME/Appdata/Local/nvim/cursor.vim
 " If you use Qwerty keyboard, uncomment the next line.
 " source $HOME/nvim/cursor_for_qwerty.vim
 
@@ -223,7 +224,7 @@ noremap tmi :+tabmove<CR>
 
 " ==================== Markdown Settings ====================
 " Snippets
-source $HOME/.config/nvim/md-snippets.vim
+source $HOME/Appdata/Local/nvim/md-snippets.vim
 " auto spell
 autocmd BufRead,BufNewFile *.md setlocal spell
 
@@ -313,7 +314,9 @@ endfunc
 
 
 " ==================== Install Plugins with Vim-Plug ====================
-call plug#begin('$HOME/.config/nvim/plugged')
+call plug#begin('$HOME/Appdata/Local/nvim/plugged')
+
+Plug 'iamcco/coc-tailwindcss'
 
 Plug 'itchyny/vim-cursorword'
 
@@ -348,8 +351,8 @@ Plug 'pechorin/any-jump.vim'
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
 
 " Auto Complete
-Plug 'neoclide/coc.nvim', { 'commit': '63dd239bfe02998810b39d039827e2510885b57b', 'do': 'yarn install --frozen-lockfile' }
-" Plug 'neoclide/coc.nvim', {'branch': 'release', 'tag': 'v0.0.79'}
+" Plug 'neoclide/coc.nvim', { 'commit': '63dd239bfe02998810b39d039827e2510885b57b', 'do': 'yarn install --frozen-lockfile' }
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'npm ci'}
 Plug 'wellle/tmux-complete.vim'
 
 " Snippets
@@ -583,10 +586,10 @@ function! Show_documentation()
 	endif
 endfunction
 nnoremap <LEADER>h :call Show_documentation()<CR>
-" set runtimepath^=~/.config/nvim/coc-extensions/coc-flutter-tools/
+" set runtimepath^=~/Appdata/Local/nvim/coc-extensions/coc-flutter-tools/
 " let g:coc_node_args = ['--nolazy', '--inspect-brk=6045']
 " let $NVIM_COC_LOG_LEVEL = 'debug'
-" let $NVIM_COC_LOG_FILE = '/Users/david/Desktop/log.txt'
+" let $NVIM_COC_LOG_FILE = '/Users/peps/Desktop/log.txt'
 
 nnoremap <silent><nowait> <LEADER>d :CocList diagnostics<cr>
 nmap <silent> <LEADER>- <Plug>(coc-diagnostic-prev)
@@ -746,7 +749,7 @@ noremap <LEADER>gi :FzfGitignore<CR>
 " let g:UltiSnipsExpandTrigger="<c-e>"
 " let g:UltiSnipsJumpForwardTrigger="<c-e>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-n>"
-" let g:UltiSnipsSnippetDirectories = [$HOME.'/.config/nvim/Ultisnips/', $HOME.'/.config/nvim/plugged/vim-snippets/UltiSnips/']
+" let g:UltiSnipsSnippetDirectories = [$HOME.'/Appdata/Local/nvim/Ultisnips/', $HOME.'/Appdata/Local/nvim/plugged/vim-snippets/UltiSnips/']
 " silent! au BufEnter,BufRead,BufNewFile * silent! unmap <c-r>
 " " Solve extreme insert-mode lag on macOS (by disabling autotrigger)
 " augroup ultisnips_no_auto_expansion
@@ -869,10 +872,10 @@ cnoreabbrev sw w suda://%
 let g:vimspector_enable_mappings = 'HUMAN'
 function! s:read_template_into_buffer(template)
 	" has to be a function to avoid the extra space fzf#run insers otherwise
-	execute '0r ~/.config/nvim/sample_vimspector_json/'.a:template
+	execute '0r ~/Appdata/Local/nvim/sample_vimspector_json/'.a:template
 endfunction
 command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
-			\   'source': 'ls -1 ~/.config/nvim/sample_vimspector_json',
+			\   'source': 'ls -1 ~/Appdata/Local/nvim/sample_vimspector_json',
 			\   'down': 20,
 			\   'sink': function('<sid>read_template_into_buffer')
 			\ })
@@ -1140,7 +1143,7 @@ endif
 noremap <c-g> :LazyGit<CR>
 let g:lazygit_floating_window_winblend = 0 " transparency of floating window
 let g:lazygit_floating_window_scaling_factor = 1.0 " scaling factor for floating window
-let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
+let g:lazygit_floating_window_border_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
 let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
 
 
@@ -1250,6 +1253,6 @@ exec "nohlsearch"
 
 " Open the _machine_specific.vim file if it has just been created
 if has_machine_specific_file == 0
-	exec "e ~/.config/nvim/_machine_specific.vim"
+	exec "e ~/Appdata/Local/nvim/_machine_specific.vim"
 endif
 
